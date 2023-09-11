@@ -116,7 +116,7 @@ const TableDemo = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`/api/user/pembayaran?email=${token}`);
+      const response = await axios.get(`/api/user/pembayaran?email=null`);
       console.log(response.data);
       setData(response.data);
     } catch (error) {
@@ -227,10 +227,10 @@ const TableDemo = () => {
                 <button 
                   onClick={() => handleEditClick(item)}
                   className={`${
-                    item.status !== 'Sudah DIbayar' && item.status !== 'Pending' ? 'bg-green-500 text-white py-1 px-2 rounded hover:bg-red-600 transition duration-300' : 'hidden'
+                    item.status !== 'Sudah DIbayar' && item.status !== 'Belum Lunas' ? 'bg-green-500 text-white py-1 px-2 rounded hover:bg-red-600 transition duration-300' : 'hidden'
                   }`}
                >
-                 Bayar
+                 Acc
           </button></td>
               </tr>
             ))}

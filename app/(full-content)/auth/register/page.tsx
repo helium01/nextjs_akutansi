@@ -9,8 +9,8 @@ import { LayoutContext } from "../../../../layout/context/layoutcontext";
 import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 
-import { Dropdown } from 'primereact/dropdown';
-import { InputTextarea } from 'primereact/inputtextarea';
+import { Dropdown } from "primereact/dropdown";
+import { InputTextarea } from "primereact/inputtextarea";
 
 const LoginPage = () => {
   const [name, setName] = useState("");
@@ -40,28 +40,43 @@ const LoginPage = () => {
       alamat,
       status,
       password,
-      role
+      role,
     };
 
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
+      const response = await fetch("/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
+        const data = await response.json();
+
+        // console.log(data.token);
         // Registrasi berhasil, lakukan tindakan yang sesuai
-        console.log('Registration successful');
-        router.push('/'); // Pindahkan ke halaman login
+        const token = data.token;
+        const emaill = data.email;
+        const role = data.role;
+        const status = data.status;
+        const name = data.name;
+
+        // Simpan token ke local storage atau context state
+        localStorage.setItem("token", token);
+        localStorage.setItem("email", emaill);
+        localStorage.setItem("role", role);
+        localStorage.setItem("status", status);
+        localStorage.setItem("name", name);
+        console.log("Registration successful");
+        router.push("/"); // Pindahkan ke halaman login
       } else {
         // Registrasi gagal, lakukan tindakan yang sesuai
-        console.error('Registration failed');
+        console.error("Registration failed");
       }
     } catch (error) {
-      console.error('Error registering:', error);
+      console.error("Error registering:", error);
     }
   };
   return (
@@ -98,9 +113,9 @@ const LoginPage = () => {
               </div>
               <span className="text-600 font-medium">Sign in to continue</span>
             </div>
-  
+
             <div>
-            <label
+              <label
                 htmlFor="email1"
                 className="block text-900 text-xl font-medium mb-2"
               >
@@ -113,9 +128,11 @@ const LoginPage = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setName(e.target.value)}
               />
-               <label
+              <label
                 htmlFor="email1"
                 className="block text-900 text-xl font-medium mb-2"
               >
@@ -128,7 +145,9 @@ const LoginPage = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={username}
-                onChange={(e) => setUsername(e.target.value)} 
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setUsername(e.target.value)}
               />
               <label
                 htmlFor="email1"
@@ -143,9 +162,11 @@ const LoginPage = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setEmail(e.target.value)}
               />
-  
+
               <label
                 htmlFor="nik"
                 className="block text-900 text-xl font-medium mb-2"
@@ -159,9 +180,11 @@ const LoginPage = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={nik}
-                onChange={(e) => setNik(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setNik(e.target.value)}
               />
-  
+
               <label
                 htmlFor="nip"
                 className="block text-900 text-xl font-medium mb-2"
@@ -175,9 +198,11 @@ const LoginPage = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={nip}
-                onChange={(e) => setNip(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setNip(e.target.value)}
               />
-  
+
               <label
                 htmlFor="alamat"
                 className="block text-900 text-xl font-medium mb-2"
@@ -191,9 +216,11 @@ const LoginPage = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={alamat}
-                onChange={(e) => setAlamat(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setAlamat(e.target.value)}
               />
-  
+
               <label
                 htmlFor="status"
                 className="block text-900 text-xl font-medium mb-2"
@@ -209,7 +236,9 @@ const LoginPage = () => {
                 ]}
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
-                onChange={(e) => setStatus(e.value)}
+                onChange={(e: { value: React.SetStateAction<string> }) =>
+                  setStatus(e.value)
+                }
               />
 
               <label
@@ -227,9 +256,11 @@ const LoginPage = () => {
                 ]}
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
-                onChange={(e) => setRole(e.value)}
+                onChange={(e: { value: React.SetStateAction<string> }) =>
+                  setRole(e.value)
+                }
               />
-  
+
               <label
                 htmlFor="password1"
                 className="block text-900 font-medium text-xl mb-2"
@@ -239,13 +270,15 @@ const LoginPage = () => {
               <Password
                 inputId="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> };
+                }) => setPassword(e.target.value)}
                 placeholder="Password"
                 toggleMask
                 className="w-full mb-5"
                 inputClassName="w-full p-3 md:w-30rem"
               />
-  
+
               <Button
                 label="Sign In"
                 className="w-full p-3 text-xl"
@@ -257,7 +290,6 @@ const LoginPage = () => {
       </div>
     </div>
   );
-  
 };
 
 export default LoginPage;

@@ -51,7 +51,8 @@ const Dashboard = () => {
     total_pinjaman:0,
   }); 
   useEffect(() => {
-    axios.get('/api/dashboard?email=${token2}') 
+    const token2 = localStorage.getItem('email');
+    axios.get(`/api/dashboard?email=${token2}`) 
       .then(response => {
         console.log(response.data);
         setDashboardData(response.data);

@@ -22,6 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const connection = await mysql.createConnection(dbConfig);
   
   try {
+    console.log(email);
     const query = `SELECT * FROM users WHERE email = ?`;
     const [results] = await connection.execute<RowDataPacket[]>(query, [email]);
   

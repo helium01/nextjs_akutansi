@@ -18,17 +18,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       let status2;
       const connection = await mysql.createConnection(dbConfig);
 
+      console.log(status);
       // Query untuk mengedit data dalam tabel berdasarkan ID
       const query = `
         UPDATE pembayaran
         SET status = ?
         WHERE id = ?
       `; 
-      await connection.execute(query, ["Sudah DIbayar", id]);
+      await connection.execute(query, ["Pending", id]);
 
-      // Menutup koneksi database
-       
-            console.log(angsuran_ke-1);
+      if(status=="Pending"){
+         console.log(angsuran_ke-1);
             if(angsuran_ke-1==0){
                 status2="Lunas";
                }else{
@@ -38,10 +38,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         INSERT INTO pembayaran (id_transaksi, angsuran_ke,jumlah_angsuran_bulan,sisa_angsuran,status,foto, created_at)
         VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
+      const query4 = `
+      UPDATE pembayaran
+      SET status = ?
+      WHERE id = ?
+    `; 
+    await connection.execute(query4, ["Sudah DIbayar", id]);
     //   console.log(id, id_transaksi, angsuran_ke-1, jumlah_angsuran_per_bulan, sisa_angsuran-jumlah_angsuran_per_bulan, status2,tanggal_pencairan);
       await connection.execute(query3, [id_transaksi, angsuran_ke-1, jumlah_angsuran_per_bulan, sisa_angsuran-jumlah_angsuran_per_bulan, status2,foto,created_at]);
-// console.log(connection.execute(query3, [id, lamaAngsuran, hasil, lamaAngsuran, status, "null",tanggal_pencairan]));
-          // Menutup koneksi database
+      const query = `
+        UPDATE transaksi_pinjamans
+        SET jumlah_pinjaman = ?
+        WHERE id = ?
+      `; 
+      await connection.execute(query, [sisa_angsuran-jumlah_angsuran_per_bulan, id_transaksi]);
+      }
+       
+     // Menutup koneksi database
           connection.end();
     
       res.status(200).json({ message: "sukses" });

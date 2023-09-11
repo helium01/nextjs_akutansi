@@ -47,6 +47,7 @@ const AppMenu = () => {
                         { label: 'Master Jenis Pinjam', icon: 'pi pi-fw pi-exclamation-circle', to: '/admin/master_pinjam' },
                         { label: 'Transaksi Pinjam', icon: 'pi pi-fw pi-mobile', to: '/admin/transaksi_pinjam', class: 'rotated-icon' },
                         { label: 'Transaksi Simpan', icon: 'pi pi-fw pi-table', to: '/admin/transaksi_simpan' },
+                        { label: 'Transaksi Pembayaran', icon: 'pi pi-fw pi-table', to: '/admin/transaksi_pembayaran' },
                         { label: 'Report user', icon: 'pi pi-fw pi-list', to: '/admin/report_user' },
                         { label: 'Report Simpan', icon: 'pi pi-fw pi-share-alt', to: '/admin/report_simpan' },
                         { label: 'Report Tahunan', icon: 'pi pi-fw pi-tablet', to: '/admin/report_tahunan' },

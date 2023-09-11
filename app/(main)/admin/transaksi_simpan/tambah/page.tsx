@@ -159,7 +159,7 @@ const InputDemo = () => {
                 value={name}
                 onChange={(e) => handleUserChange(e.target.value)}
               >
-                <option value="">Pilih Jenis Simpanan</option>
+                <option value="">Pilih Nama Client</option>
                 {data2.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}

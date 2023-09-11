@@ -13,9 +13,10 @@ const dashboardHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
   const connection = await mysql.createConnection(dbConfig);
-  const token2 = req.query.email;
+  const token2= req.query.email;
 
   try {
+    console.log(token2);
     const roleToCount = 'user';
     const status = 'active';  
     const status_pinjam = 'pending'; 

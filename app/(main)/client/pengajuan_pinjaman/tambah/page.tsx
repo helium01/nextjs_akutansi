@@ -191,7 +191,7 @@ const InputDemo = () => {
                 htmlFor="email1"
                 className="block text-900 text-xl font-medium mb-2"
               >
-                Jenis Simpanan
+                Pinjaman
               </label>
               <select
                 id="name"
@@ -200,7 +200,7 @@ const InputDemo = () => {
                 value={jenis_pinjaman}
                 onChange={(e) => handleJenisSimpananChange(e.target.value)}
               >
-                <option value="">Pilih Jenis Simpanan</option>
+                <option value="">Pilih Pinjaman</option>
                 {data.map((item) => (
                 <option key={item.id} value={item.jenis_pinjaman}>
                   {item.jenis_pinjaman}

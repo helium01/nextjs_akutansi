@@ -13,8 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         password: '',
         database: 'akutansi2',
       });
-
-      const [rows] = await db.query(`SELECT 
+      console.log(email);
+      if(email=="null"){
+        const [rows] = await db.query(`SELECT 
       pembayaran.*,
       transaksi_pinjamans.nama,
       transaksi_pinjamans.email
@@ -22,11 +23,27 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             pembayaran
         INNER JOIN 
             transaksi_pinjamans ON pembayaran.id_transaksi = transaksi_pinjamans.id
-        WHERE 
-            transaksi_pinjamans.email = '${email}';
+            WHERE 
+              pembayaran.status = 'Pending';
   `);
 
-      res.status(200).json(rows);
+  res.status(200).json(rows);
+      }else{
+        const [rows] = await db.query(`SELECT 
+        pembayaran.*,
+        transaksi_pinjamans.nama,
+        transaksi_pinjamans.email
+          FROM 
+              pembayaran
+          INNER JOIN 
+              transaksi_pinjamans ON pembayaran.id_transaksi = transaksi_pinjamans.id
+          WHERE 
+              transaksi_pinjamans.email = '${email}';
+    `);
+
+    res.status(200).json(rows);
+      }
+      
     } catch (error) {
       console.error('Error fetching data:', error);
       res.status(500).json({ error: 'Internal Server Error', message: error });
