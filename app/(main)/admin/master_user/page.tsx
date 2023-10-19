@@ -76,7 +76,13 @@ const TableDemo = () => {
           "status":status
         }),
       });
-      localStorage.setItem('status', status);
+      let id2=localStorage.getItem("id");
+      console.log(id2);
+      console.log(id);
+      if(id2===id.toString()){
+        localStorage.setItem('status', status);
+
+      }
 
       setData(prevData =>
         prevData.map(item => (item.id === id ? { ...item, status: status} : item))

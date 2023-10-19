@@ -12,7 +12,7 @@ const dbConfig = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'PUT') { // Anda dapat menggunakan PUT atau PATCH sesuai preferensi Anda
     try {
-      const { id,id_transaksi, angsuran_ke,jumlah_angsuran_per_bulan, sisa_angsuran,status,foto,created_at} = req.body;
+      const { id,id_transaksi, angsuran_ke,jumlah_angsuran_per_bulan, sisa_angsuran,status,foto,created_at,name,nip,acc_by} = req.body;
       console.log(req.body);
       // Membuka koneksi ke database
       let status2;
@@ -35,8 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 status2="Belum Lunas";
                }
         const query3 = `
-        INSERT INTO pembayaran (id_transaksi, angsuran_ke,jumlah_angsuran_bulan,sisa_angsuran,status,foto, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO pembayaran (id_transaksi, angsuran_ke,jumlah_angsuran_bulan,sisa_angsuran,status,foto, created_at,name,nip,acc_by)
+        VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)
       `;
       const query4 = `
       UPDATE pembayaran
@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     `; 
     await connection.execute(query4, ["Sudah DIbayar", id]);
     //   console.log(id, id_transaksi, angsuran_ke-1, jumlah_angsuran_per_bulan, sisa_angsuran-jumlah_angsuran_per_bulan, status2,tanggal_pencairan);
-      await connection.execute(query3, [id_transaksi, angsuran_ke-1, jumlah_angsuran_per_bulan, sisa_angsuran-jumlah_angsuran_per_bulan, status2,foto,created_at]);
+      await connection.execute(query3, [id_transaksi, angsuran_ke-1, jumlah_angsuran_per_bulan, sisa_angsuran-jumlah_angsuran_per_bulan, status2,foto,created_at,name,nip,acc_by]);
       const query = `
         UPDATE transaksi_pinjamans
         SET jumlah_pinjaman = ?

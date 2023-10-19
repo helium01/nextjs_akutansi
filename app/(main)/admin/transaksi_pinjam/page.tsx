@@ -55,15 +55,17 @@ const TableDemo = () => {
   const [tanggal_pencairan, setTanggal] = useState("");
   const [jenis_pinjaman, setJenis] = useState("");
   const [jumlah_pinjaman, setJumlah] = useState("");
+  const [email, setEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [id, setId] = useState("");
 
-  const handleEditClick = (dataToEdit: { jumlah_pinjaman: React.SetStateAction<string>; id: React.SetStateAction<string>; tanggal_pencairan: React.SetStateAction<string>; jenis_pinjaman:React.SetStateAction<string>; }) => {
+  const handleEditClick = (dataToEdit: { email:React.SetStateAction<string>, jumlah_pinjaman: React.SetStateAction<string>; id: React.SetStateAction<string>; tanggal_pencairan: React.SetStateAction<string>; jenis_pinjaman:React.SetStateAction<string>; }) => {
     setTanggal(dataToEdit.tanggal_pencairan);
     setId(dataToEdit.id);
     setJenis(dataToEdit.jenis_pinjaman);
     setIsEditing(true);
     setJumlah(dataToEdit.jumlah_pinjaman);
+    setEmail(dataToEdit.email);
   };
   useEffect(() => {
     // Fungsi untuk mengupdate tanggal dan waktu setiap detik
@@ -91,6 +93,7 @@ const TableDemo = () => {
     // console.log(formattedDateTime);
     const formData = {
       id,
+      email,
       jumlah_pinjaman,
       jenis_pinjaman,
       tanggal_pencairan,

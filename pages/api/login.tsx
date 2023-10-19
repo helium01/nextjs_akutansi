@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (passwordMatch) {
         // Password cocok, lakukan tindakan yang sesuai (misalnya, berikan token JWT)
         const token = jwt.sign({ email: user.email }, JWT_SECRET_KEY, { expiresIn: '1h' });
-        return res.status(200).json({ token, email:user.email,role:user.role,status:user.status,name:user.name});
+        return res.status(200).json({ token, email:user.email,role:user.role,status:user.status,name:user.name,id:user.id});
       } else {
         return res.status(401).json({ message: 'Invalid credentials' });
       }

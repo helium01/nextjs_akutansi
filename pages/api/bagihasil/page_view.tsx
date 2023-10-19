@@ -19,12 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         amount_admin,
         amount_anggota,
         amount_koperasi} = req.body;
-
+        // console.log(amount_anggota);
       // Membuka koneksi ke database
       const connection = await mysql.createConnection(dbConfig);
 
       // Query untuk menambahkan data ke dalam tabel
-      const query = `INSERT INTO your_table_name (PersentaseKoperasi, PersentaseAnggota, FeeAdmin, Periode, AmountKoperasi, AmountAnggota, AmountFeeAdmin) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      const query = `INSERT INTO your_table_name (persentase_koperasi, PersentaseAnggota, FeeAdmin, Periode, AmountKoperasi, AmountAnggota, AmountFeeAdmin) VALUES (?, ?, ?, ?, ?, ?, ?)`;
       await connection.execute(query, [presentase_anggota,
         presentase_koperasi,
         vee_admin,

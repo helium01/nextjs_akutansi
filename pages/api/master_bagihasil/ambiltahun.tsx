@@ -3,8 +3,6 @@ import { createPool } from 'mysql2/promise';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
-    const { nama_tabel,email} = req.query;
-    // console.log(nama_tabel);
     let db;
     try {
       // Konfigurasi koneksi database
@@ -15,20 +13,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         database: 'akutansi2',
       });
 
-      const [rows] = await db.query(`SELECT users.*, 
-      COALESCE(s.total_simpanan, 0) AS total_simpanan,
-      SUM(transaksi_pinjamans.jumlah_pinjaman) AS total_pinjaman
-    FROM users
-    LEFT JOIN (
-      SELECT email, SUM(besar_simpanan) AS total_simpanan
-      FROM transaksi_simpanans
-      GROUP BY email
-    ) s ON users.email = s.email
-    LEFT JOIN transaksi_pinjamans ON users.email = transaksi_pinjamans.email
-    WHERE users.email = '${email}'  AND transaksi_pinjamans.status = 'Acc'
-    GROUP BY users.id;
-    `);
-     
+      const [rows] = await db.query(`SELECT periode FROM bagihasils ORDER BY id DESC LIMIT 1;
+      `);
       console.log(rows);
       res.status(200).json(rows);
     } catch (error) {

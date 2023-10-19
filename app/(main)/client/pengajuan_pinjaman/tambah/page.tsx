@@ -221,8 +221,18 @@ const InputDemo = () => {
                 className="w-full md:w-30rem mb-5"
                 style={{ padding: "1rem" }}
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                readOnly={jenis_pinjaman === "Wajib" || jenis_pinjaman === "Pokok"}
+                onChange={(e) => {
+                  const inputValue = parseInt(e.target.value);
+                  if (!isNaN(inputValue)) {
+                    if (inputValue > 1000000) {
+                      setAmount('1000000');
+                    } else {
+                      setAmount(inputValue.toString());
+                    }
+                  } else {
+                    setAmount(''); // Menangani kasus ketika nilai yang dimasukkan bukan angka
+                  }
+                }}
               />
             <label
                 htmlFor="nik"

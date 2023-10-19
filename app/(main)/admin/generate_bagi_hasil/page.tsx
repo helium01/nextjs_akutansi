@@ -71,14 +71,35 @@ const TableDemo = () => {
       console.error('Error fetching data:', error);
     }
   };
-  const checkShowButton = () => {
+  const checkShowButton = async () =>  {
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth(); // Mengembalikan bulan 0-11 (0 untuk Januari, 11 untuk Desember)
     const currentDay = currentDate.getDate();
     console.log(currentMonth);
-    if (currentMonth === 8 && currentDay > 1) {
-      setShowButton(true);
+    const currentYear = new Date().getFullYear();
+    if (currentMonth === 9 && currentDay > 1) {
+      try {
+        const response = await fetch('/api/master_bagihasil/ambiltahun');
+        const data = await response.json();
+        if (Array.isArray(data) && data.length === 0) {
+          setShowButton(true);
+        } else {
+          if (data[0].periode) {
+            if (data[0].periode !== currentYear) {
+              setShowButton(true);
+            } else {
+              setShowButton(false);
+            }
+          } else {
+            setShowButton(true);
+          }
+        }
+        
+      } catch (error) {
+        console.error('Error fetching data from API:', error);
+      }
     }
+    
   };
 
   

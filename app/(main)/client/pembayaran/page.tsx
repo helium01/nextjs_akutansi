@@ -8,6 +8,9 @@ import  { useRouter } from "next/navigation";
 
 interface UserData {
   id: number;
+  name:string;
+  nip:string;
+  acc_by:string;
   id_transaksi: string;
   angsuran_ke: string;
   jumlah_angsuran_bulan: string;
@@ -51,11 +54,13 @@ const TableDemo = () => {
   const [status, setStatus] = useState("");
   const [id, setId] = useState("");
   const [name, setName] = useState('');
+  const [nip, setNip] = useState('');
+  const [acc_by, setAcc_by] = useState('');
   const [image, setImage] = useState('');
 
   const handleEditClick = async (dataToEdit: { id:React.SetStateAction<string>; id_transaksi: React.SetStateAction<string>; angsuran_ke: React.SetStateAction<string>; 
     jumlah_angsuran_bulan: React.SetStateAction<string>; sisa_angsuran: React.SetStateAction<string>; 
-    status: React.SetStateAction<string>; 
+    status: React.SetStateAction<string>; name: React.SetStateAction<string>; nip: React.SetStateAction<string>; acc_by: React.SetStateAction<string>; 
   }) => {
    
     const token2 = localStorage.getItem('role');
@@ -63,6 +68,9 @@ const TableDemo = () => {
     console.log(formattedDateTime);
     const formData = {
       id:dataToEdit.id,
+      name:dataToEdit.name,
+      nip:dataToEdit.nip,
+      acc_by:dataToEdit.acc_by,
       id_transaksi:dataToEdit.id_transaksi,
       angsuran_ke:dataToEdit.angsuran_ke,
       jumlah_angsuran_per_bulan:dataToEdit.jumlah_angsuran_bulan,
@@ -192,22 +200,19 @@ const TableDemo = () => {
   ) : (
     <div className="p-col-12">
       <div className="card p-4">
-        <h5 className="text-xl font-semibold mb-4">Master User</h5>
-        <a href={'/admin/master_user/tambah'}  rel="noopener noreferrer" className="w-11rem mr-2">
-      <Button
-        // icon={allExpanded ? "pi pi-minus" : "pi pi-plus"}
-        label={"Tambah Data"}
-        className="w-11rem mb-3"
-      />
-      </a>
+        <h5 className="text-xl font-semibold mb-4">Master Pembayaran</h5>
+        
        <table className="min-w-full border-collapse table-auto col">
           <thead>
             <tr className="bg-gray-100">
               <th className="border py-2 px-4">Id Transaksi</th>
+              <th className="border py-2 px-4">Name</th>
+              <th className="border py-2 px-4">Nip</th>
               <th className="border py-2 px-4">Angsuran Ke</th>
               <th className="border py-2 px-4">Jumlah Angsuran Per Bulan</th>
               <th className="border py-2 px-4">Sisa Angsuran</th>
               <th className="border py-2 px-4">Status</th>
+              <th className="border py-2 px-4">Acc_by</th>
               {/* <th className="border py-2 px-4">Foto</th> */}
               <th className="border py-2 px-4">Created At</th>
               <th className="border py-2 px-4">Opsi</th>
@@ -217,10 +222,13 @@ const TableDemo = () => {
             {data.map((item) => (
               <tr key={item.id}>
                 <td className="border py-2 px-4">{item.id_transaksi}</td>
+                <td className="border py-2 px-4">{item.name}</td>
+                <td className="border py-2 px-4">{item.nip}</td>
                 <td className="border py-2 px-4">{item.angsuran_ke}</td>
                 <td className="border py-2 px-4">{item.jumlah_angsuran_bulan}</td>
                 <td className="border py-2 px-4">{item.sisa_angsuran}</td>
                 <td className="border py-2 px-4">{item.status}</td>
+                <td className="border py-2 px-4">{item.acc_by}</td>
                 {/* <td className="border py-2 px-4">{item.foto}</td> */}
                 <td className="border py-2 px-4">{item.created_at}</td>
                 <td className="border py-2 px-4">

@@ -87,7 +87,7 @@ const TableDemo = () => {
     const currentMonth = currentDate.getMonth(); // Mengembalikan bulan 0-11 (0 untuk Januari, 11 untuk Desember)
     const currentDay = currentDate.getDate();
 
-    if (currentMonth === 7 && currentDay > 13) {
+    if (currentMonth === 9 && currentDay > 13) {
       setShowButton(true);
     }
   };

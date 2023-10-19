@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
 import  { useRouter } from "next/navigation";
+import { StyleDictionary } from "pdfmake/interfaces";
+import pdfMake from "pdfmake/build/pdfmake";
 
 // import { Link } from 'react-router-dom'; 
 
@@ -77,19 +79,64 @@ const TableDemo = () => {
       console.error('Error registering:', error);
     }
   };
+  const fetchAndGeneratePDF = async () => {
+    try {
+      // Fetch data from the API
+      await fetchData();
+
+      // Define the PDF document content using the fetched data
+      const documentDefinition = {
+        pageSize: 'A3', 
+        content: [
+          {
+            text: 'Laporan User',
+            style: 'header',
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ['*', '*','*','*', '*','*','*'],
+              body: [
+                  ['Nama','Alamat','email','username','role','jumlah simpanan', 'Status'], // Table header
+                ...data.map(item => [item.name,item.alamat,item.email,item.username,item.role,item.total_simpanan, item.status]), // Table data
+              ],
+            },
+          },
+        ],
+        styles: {
+          header: {
+            fontSize: 12,
+            font: 'Roboto',
+            alignment: 'center',
+            margin: [0, 0, 0, 20],
+          },
+        } as StyleDictionary,
+        pageOrientation: 'landscape',  // Add "as StyleDictionary" here
+      };
+      
+      
+
+      // Create the PDF
+      const pdfDoc = pdfMake.createPdf(documentDefinition);
+
+      // Download the PDF
+      pdfDoc.download('laporan.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
 
   return (
     <div className="p-grid p-dir-col">
     <div className="p-col-12">
       <div className="card p-4">
-        <h5 className="text-xl font-semibold mb-4">Master User</h5>
-        <a href={'/admin/master_user/tambah'}  rel="noopener noreferrer" className="w-11rem mr-2">
+        <h5 className="text-xl font-semibold mb-4">Report Tahunan</h5>
       <Button
         // icon={allExpanded ? "pi pi-minus" : "pi pi-plus"}
         label={"Cetak Data"}
         className="w-11rem mb-3"
+        onClick={fetchAndGeneratePDF}
       />
-      </a>
        <table className="min-w-full border-collapse table-auto col">
           <thead>
             <tr className="bg-gray-100">

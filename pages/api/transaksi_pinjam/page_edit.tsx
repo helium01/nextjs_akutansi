@@ -12,11 +12,13 @@ const dbConfig = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'PUT') { // Anda dapat menggunakan PUT atau PATCH sesuai preferensi Anda
     try {
-      const { id, jenis_pinjaman,tanggal_pencairan, approved_by,status,jumlah_pinjaman} = req.body;
-      // console.log(req.body);
+      const { id, jenis_pinjaman,tanggal_pencairan, approved_by,status,jumlah_pinjaman,email} = req.body;
+      console.log(email);
       // Membuka koneksi ke database
       const connection = await mysql.createConnection(dbConfig);
-
+      const querydata=`select * FROM users WHERE email='${email}'`
+      const [rows2]=await connection.query<RowDataPacket[]>(querydata);
+      console.log(rows2[0].nip);
       // Query untuk mengedit data dalam tabel berdasarkan ID
       const query = `
         UPDATE transaksi_pinjamans
@@ -41,11 +43,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const hasil=angsuran/lamaAngsuran;
         // console.log(hasil);
         const query3 = `
-        INSERT INTO pembayaran (id_transaksi, angsuran_ke,jumlah_angsuran_bulan,sisa_angsuran,status,foto, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO pembayaran (id_transaksi, angsuran_ke,jumlah_angsuran_bulan,sisa_angsuran,status,foto, created_at,name,nip,acc_by)
+        VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)
       `;
       console.log(id, lamaAngsuran, hasil, lamaAngsuran, status, "null",tanggal_pencairan);
-      await connection.execute(query3, [id, lamaAngsuran, hasil, jumlah_pinjaman, status, "null",tanggal_pencairan]);
+      await connection.execute(query3, [id, lamaAngsuran, hasil, jumlah_pinjaman, status, "null",tanggal_pencairan,rows2[0].name,rows2[0].nip,approved_by]);
 // console.log(connection.execute(query3, [id, lamaAngsuran, hasil, lamaAngsuran, status, "null",tanggal_pencairan]));
           // Menutup koneksi database
           connection.end();

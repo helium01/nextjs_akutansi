@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       amount_admin,
       amount_anggota,
       amount_koperasi } = req.body;
-    //   console.log(jenis_simpanan);
+      console.log(amount_anggota);
       // Membuka koneksi ke database
       const connection = await mysql.createConnection(dbConfig);
 

@@ -33,6 +33,7 @@ const LoginPage = () => {
       const role = response.data.role;
       const status = response.data.status;
       const name=response.data.name;
+      const id=response.data.id;
 
       // Simpan token ke local storage atau context state
       localStorage.setItem('token', token);
@@ -40,6 +41,7 @@ const LoginPage = () => {
       localStorage.setItem('role', role);
       localStorage.setItem('status', status);
       localStorage.setItem('name', name);
+      localStorage.setItem('id', id);
       console.log(response.data.name);
       // Redirect ke halaman setelah login sukses
       window.location.href = '/'; // Ganti dengan halaman yang sesuai
