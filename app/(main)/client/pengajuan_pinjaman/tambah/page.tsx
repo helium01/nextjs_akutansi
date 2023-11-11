@@ -40,6 +40,7 @@ const InputDemo = () => {
   const [name, setName] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
   const [amount, setAmount] = useState("");
+  const [maxamount, setMaxAmount] = useState("");
   const [email, setEmail] = useState("");
   const [created_by, setCreatedBy] = useState("");
   const [created_at, setCreatedAt] = useState("");
@@ -142,6 +143,7 @@ const InputDemo = () => {
       setDeskripsi(selectedData.deskripsi);
       setAngsuran(selectedData.lama_angsuran);
       setBunga(selectedData.bunga);
+      setMaxAmount(selectedData.maksimal_pinjaman);
     }
   };
  
@@ -224,8 +226,10 @@ const InputDemo = () => {
                 onChange={(e) => {
                   const inputValue = parseInt(e.target.value);
                   if (!isNaN(inputValue)) {
-                    if (inputValue > 1000000) {
-                      setAmount('1000000');
+                    const newAmount = parseInt(maxamount);
+                    console.log(amount);
+                    if (inputValue > newAmount) {
+                      setAmount(newAmount.toString());
                     } else {
                       setAmount(inputValue.toString());
                     }

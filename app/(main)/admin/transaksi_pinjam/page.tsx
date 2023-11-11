@@ -132,14 +132,15 @@ const TableDemo = () => {
       if(status=="Pending"){
         status="Tolak"
       }
-      const response = await fetch('/api/transaksi_pinjam/page_edit', {
+      const response = await fetch('/api/transaksi_pinjam/page_tolak', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id,
-          "status":status,
+          "email":email,
+          "status":"Tolak",
           "tanggal_pencairan":null,
           "created_at":formatDateTime,
           "approved_by":token2

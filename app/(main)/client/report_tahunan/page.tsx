@@ -3,8 +3,20 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button } from "primereact/button";
 import  { useRouter } from "next/navigation";
-import { StyleDictionary } from "pdfmake/interfaces";
 import pdfMake from "pdfmake/build/pdfmake";
+import { StyleDictionary } from "pdfmake/interfaces";
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+// import { Link } from 'react-router-dom'; 
+const fontURL = '/Roboto-Medium.ttf';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs[fontURL] = fetch('/Roboto-Medium.ttf').then(response => response.arrayBuffer());
+// Tambahkan definisi font
+pdfMake.fonts = {
+  Roboto: {
+    normal: 'Roboto-Medium.ttf', // Sesuaikan dengan path yang benar
+    bold: 'Roboto-Medium.ttf',   // Juga sesuaikan dengan path yang benar
+  },
+};
 
 // import { Link } from 'react-router-dom'; 
 
